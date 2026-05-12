@@ -1306,10 +1306,24 @@ function shareLink() {
 
 function shareRepost() {
   closeShareSheet();
+  const showBonus = () => {
+    let shown = false;
+    const onReturn = () => {
+      if (!document.hidden && !shown) {
+        shown = true;
+        document.removeEventListener('visibilitychange', onReturn);
+        setTimeout(() => document.getElementById('bonus-overlay').classList.add('open'), 400);
+      }
+    };
+    document.addEventListener('visibilitychange', onReturn);
+  };
   if (tg?.shareUrl) {
     tg.shareUrl(SHARE_URL, SHARE_TEXT);
+    showBonus();
   } else if (navigator.share) {
-    navigator.share({ title: 'NEKO Sushi Bar', text: SHARE_TEXT, url: SHARE_URL });
+    navigator.share({ title: 'NEKO Sushi Bar', text: SHARE_TEXT, url: SHARE_URL })
+      .then(() => document.getElementById('bonus-overlay').classList.add('open'))
+      .catch(() => {});
   } else {
     showToast('🔗 Ссылка скопирована!');
   }
