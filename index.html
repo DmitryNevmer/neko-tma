@@ -1317,14 +1317,19 @@ function shareRepost() {
     };
     document.addEventListener('visibilitychange', onReturn);
   };
+  const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(SHARE_TEXT)}`;
   if (tg?.shareUrl) {
     tg.shareUrl(SHARE_URL, SHARE_TEXT);
+    showBonus();
+  } else if (tg?.openTelegramLink) {
+    tg.openTelegramLink(shareUrl);
     showBonus();
   } else if (navigator.share) {
     navigator.share({ title: 'NEKO Sushi Bar', text: SHARE_TEXT, url: SHARE_URL })
       .then(() => document.getElementById('bonus-overlay').classList.add('open'))
       .catch(() => {});
   } else {
+    navigator.clipboard?.writeText(SHARE_URL);
     showToast('🔗 Ссылка скопирована!');
   }
 }
