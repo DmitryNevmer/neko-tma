@@ -1317,12 +1317,30 @@ function shareRepost() {
 
 function shareStory() {
   closeShareSheet();
-  const storyImg = 'https://neko-tma.vercel.app/og.jpg';
   if (tg?.shareToStory) {
-    tg.shareToStory(storyImg, { text: SHARE_TEXT, widget_link: { url: SHARE_URL, name: 'NEKO' } });
-    setTimeout(() => document.getElementById('bonus-overlay').classList.add('open'), 800);
+    tg.shareToStory('https://neko-tma.vercel.app/logo.png', {
+      text: SHARE_TEXT,
+      widget_link: { url: SHARE_URL, name: 'NEKO Sushi Bar' }
+    });
+    // Show bonus when user returns from story creation screen
+    let bonusShown = false;
+    const onReturn = () => {
+      if (!document.hidden && !bonusShown) {
+        bonusShown = true;
+        document.removeEventListener('visibilitychange', onReturn);
+        setTimeout(() => document.getElementById('bonus-overlay').classList.add('open'), 400);
+      }
+    };
+    document.addEventListener('visibilitychange', onReturn);
   } else {
-    document.getElementById('bonus-overlay').classList.add('open');
+    // Fallback: browser share or direct bonus
+    if (navigator.share) {
+      navigator.share({ title: 'NEKO Sushi Bar', text: SHARE_TEXT, url: SHARE_URL })
+        .then(() => document.getElementById('bonus-overlay').classList.add('open'))
+        .catch(() => {});
+    } else {
+      document.getElementById('bonus-overlay').classList.add('open');
+    }
   }
 }
 
