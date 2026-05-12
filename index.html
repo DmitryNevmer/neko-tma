@@ -229,6 +229,53 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 
 /* ── TAXI BTN ────────────────────────────── */
 .soc-taxi{background:linear-gradient(135deg,#FFCC00,#FF9900);color:#111}
+
+/* ── LIGHT THEME ─────────────────────────── */
+[data-theme="light"]{
+  --gold:#B07808; --gold-dim:rgba(176,120,8,.13); --gold-border:rgba(176,120,8,.35);
+  --red:#A83030;
+  --black:#F0E8D4; --dark:#E6DABC; --card:#DDD2B2; --card2:#D4C8A4; --border:#C2B48A;
+  --text:#1C1810; --muted:#6A5A40; --hint:#9A8A68;
+}
+[data-theme="light"] .menu-card,.menu-card{transition:transform .15s,box-shadow .15s}
+[data-theme="light"] .bottom-nav,[data-theme="light"] .header{background:var(--dark);border-color:var(--border)}
+[data-theme="light"] .menu-card,[data-theme="light"] .about-card,[data-theme="light"] .cart-item,[data-theme="light"] .share-item,[data-theme="light"] .order-option,[data-theme="light"] .booking-field input,[data-theme="light"] .booking-field select,[data-theme="light"] .booking-field textarea{background:var(--card);border-color:var(--border)}
+[data-theme="light"] .comment-block textarea,[data-theme="light"] .address-block textarea{background:var(--card);border-color:var(--border);color:var(--text)}
+[data-theme="light"] .hours-item,[data-theme="light"] .cart-item-icon,[data-theme="light"] .about-icon,[data-theme="light"] .share-item-icon:not([style]){background:var(--card2)}
+[data-theme="light"] .cat-chip{background:var(--card);border-color:var(--border);color:var(--muted)}
+[data-theme="light"] .cat-chip.active{background:var(--gold-dim);color:var(--gold);border-color:var(--gold-border)}
+[data-theme="light"] .qty-btn,[data-theme="light"] .cart-qty-btn{background:var(--border);color:var(--text)}
+[data-theme="light"] .modal,[data-theme="light"] .order-sheet,[data-theme="light"] .share-sheet,[data-theme="light"] .bonus-modal{background:var(--dark)}
+[data-theme="light"] .cart-footer{background:var(--dark);border-color:var(--border)}
+[data-theme="light"] .modal-overlay,[data-theme="light"] .order-modal,[data-theme="light"] .share-overlay,[data-theme="light"] .bonus-overlay{background:rgba(0,0,0,.55)}
+[data-theme="light"] .promo-slide-1{background:linear-gradient(135deg,#e8d8a8,#d4c080);border-color:rgba(176,120,8,.3)}
+[data-theme="light"] .promo-slide-2{background:linear-gradient(135deg,#e8c0a8,#d49080);border-color:rgba(168,48,48,.3)}
+[data-theme="light"] .promo-slide-3{background:linear-gradient(135deg,#c4cce8,#a8b4d8);border-color:rgba(80,80,200,.3)}
+[data-theme="light"] .promo-slide-4{background:linear-gradient(135deg,#b8d8b0,#98c888);border-color:rgba(40,140,80,.3)}
+[data-theme="light"] .soc-map{background:var(--card2);color:var(--text);border-color:var(--border)}
+[data-theme="light"] .soc-phone{color:#fff}
+[data-theme="light"] .geo-btn{background:var(--card2);border-color:var(--border);color:var(--text)}
+[data-theme="light"] .lang-btn{background:var(--border);color:var(--muted)}
+[data-theme="light"] .lang-btn.active{background:var(--gold);color:#fff}
+.toast{color:#111}
+
+/* ── HEADER CONTROLS ────────────────────── */
+.header-controls{display:flex;align-items:center;gap:8px}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;width:30px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
+.theme-btn:active{opacity:.7}
+
+/* ── LOGO ────────────────────────────────── */
+.logo-mark{width:32px;height:32px;object-fit:cover;object-position:12% center;border-radius:8px;flex-shrink:0;display:block}
+.logo-welcome{width:110px;height:110px;object-fit:contain;object-position:10% center;border-radius:16px}
+[data-theme="light"] .logo-mark,[data-theme="light"] .logo-welcome{filter:none}
+.logo-mark,.logo-welcome{filter:invert(1) brightness(.85) sepia(.15)}
+
+/* ── CARD PHOTO IMPROVEMENTS ─────────────── */
+.menu-card-img{position:relative;overflow:hidden}
+.menu-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.menu-card-emoji{position:relative;z-index:1;font-size:48px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+/* items without photo — keep dark gradient regardless of theme */
+.no-photo-bg::before{content:'';position:absolute;inset:0}
 </style>
 </head>
 <body>
@@ -263,7 +310,7 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 <!-- ======= WELCOME ======= -->
 <div class="screen active" id="screen-welcome">
   <div class="welcome-body">
-    <div class="welcome-logo">🐱</div>
+    <div class="welcome-logo"><img src="/logo.png" class="logo-welcome" alt="NEKO"></div>
     <div class="welcome-title">NEKO</div>
     <div class="welcome-sub" data-i18n="welcome_desc">Авторский суши-бар в Батуми. Японская кухня, авторские коктейли и уютная атмосфера.</div>
     <div class="welcome-actions">
@@ -276,11 +323,14 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 <!-- ======= MENU SCREEN ======= -->
 <div class="screen" id="screen-menu">
   <div class="header">
-    <div class="header-logo"><span class="cat">🐱</span> NEKO</div>
-    <div class="lang-switcher">
-      <button class="lang-btn" onclick="setLang('ge')">GE</button>
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <div class="header-logo"><img src="/logo.png" class="logo-mark" alt="NEKO"> NEKO</div>
+    <div class="header-controls">
+      <button class="theme-btn" onclick="toggleTheme()">☀️</button>
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="setLang('ge')">GE</button>
+        <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
     </div>
   </div>
   <div class="scroll-content">
@@ -331,11 +381,14 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 <!-- ======= CART ======= -->
 <div class="screen" id="screen-cart">
   <div class="header">
-    <div class="header-logo"><span class="cat">🐱</span> NEKO</div>
-    <div class="lang-switcher">
-      <button class="lang-btn" onclick="setLang('ge')">GE</button>
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <div class="header-logo"><img src="/logo.png" class="logo-mark" alt="NEKO"> NEKO</div>
+    <div class="header-controls">
+      <button class="theme-btn" onclick="toggleTheme()">☀️</button>
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="setLang('ge')">GE</button>
+        <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
     </div>
   </div>
   <div id="cart-empty" class="cart-empty">
@@ -357,16 +410,19 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 <!-- ======= ABOUT ======= -->
 <div class="screen" id="screen-about">
   <div class="header">
-    <div class="header-logo"><span class="cat">🐱</span> NEKO</div>
-    <div class="lang-switcher">
-      <button class="lang-btn" onclick="setLang('ge')">GE</button>
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <div class="header-logo"><img src="/logo.png" class="logo-mark" alt="NEKO"> NEKO</div>
+    <div class="header-controls">
+      <button class="theme-btn" onclick="toggleTheme()">☀️</button>
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="setLang('ge')">GE</button>
+        <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
     </div>
   </div>
   <div class="scroll-content">
     <div class="about-hero">
-      <div class="about-cat">🐱</div>
+      <div class="about-cat"><img src="/logo.png" class="logo-welcome" alt="NEKO"></div>
       <div class="about-name">NEKO SUSHI BAR</div>
       <div class="about-desc" data-i18n="about_desc">Авторский суши-бар в Батуми. Японская кухня, авторские коктейли и тёплая атмосфера.</div>
     </div>
@@ -497,11 +553,14 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 <!-- ======= BOOKING SCREEN ======= -->
 <div class="screen" id="screen-booking">
   <div class="header">
-    <div class="header-logo"><span class="cat">🐱</span> NEKO</div>
-    <div class="lang-switcher">
-      <button class="lang-btn" onclick="setLang('ge')">GE</button>
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <div class="header-logo"><img src="/logo.png" class="logo-mark" alt="NEKO"> NEKO</div>
+    <div class="header-controls">
+      <button class="theme-btn" onclick="toggleTheme()">☀️</button>
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="setLang('ge')">GE</button>
+        <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
     </div>
   </div>
   <div class="scroll-content">
@@ -895,12 +954,14 @@ let currentItem = null;
 let currentQty = 1;
 let orderType = 'visit';
 let slideIndex = 0;
+let isDark = localStorage.getItem('neko_theme') !== 'light';
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
 
 (function init() {
+  applyTheme(isDark);
   const userLang = tg?.initDataUnsafe?.user?.language_code || 'ru';
   const lmap = { ru:'ru', en:'en', ka:'ge', ge:'ge' };
   setLang(lmap[userLang] || 'ru');
@@ -967,8 +1028,8 @@ function renderMenu() {
     const name = item[lang] || item.ru;
     const p = item.price % 1 === 0 ? item.price + '₾' : item.price.toFixed(2) + '₾';
     const imgContent = item.photo
-      ? `<img src="${PH(item.photo)}" alt="${name}" loading="lazy"><span style="position:relative;z-index:2;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));display:none">${item.e}</span>`
-      : `<span>${item.e}</span>`;
+      ? `<img src="${PH(item.photo)}" alt="${name}" loading="lazy">`
+      : `<span class="menu-card-emoji">${item.e}</span>`;
     return `<div class="menu-card cat-${item.cat}" onclick="openProductModal('${item.id}')">
       <div class="menu-card-img">${imgContent}</div>
       <div class="menu-card-body">
@@ -1297,6 +1358,19 @@ function sendBooking() {
     window.open(`https://t.me/+995599156401?text=${encodeURIComponent(msg)}`, '_blank');
   }
   showToast(t('booking_sent'));
+}
+
+// ── THEME ─────────────────────────────────────────────────────────────────
+function applyTheme(dark) {
+  isDark = dark;
+  document.documentElement.setAttribute('data-theme', dark ? '' : 'light');
+  const icon = dark ? '☀️' : '🌙';
+  document.querySelectorAll('.theme-btn').forEach(b => b.textContent = icon);
+  localStorage.setItem('neko_theme', dark ? 'dark' : 'light');
+}
+
+function toggleTheme() {
+  applyTheme(!isDark);
 }
 
 // ── GEO ───────────────────────────────────────────────────────────────────
