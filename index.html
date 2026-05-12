@@ -33,7 +33,7 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 
 /* ── BOTTOM NAV ──────────────────────────── */
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--dark);border-top:1px solid var(--border);display:flex;height:var(--nav-h);z-index:200}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;font-size:10px;font-weight:700;transition:color .2s;position:relative}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;font-size:9px;font-weight:700;transition:color .2s;position:relative}
 .nav-item.active{color:var(--gold)}
 .nav-item svg{width:22px;height:22px}
 .cart-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--red);color:white;border-radius:50%;width:16px;height:16px;font-size:10px;font-weight:800;display:none;align-items:center;justify-content:center}
@@ -227,8 +227,31 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 .geo-btn:active{opacity:.8}
 .address-block{display:none;margin-bottom:16px}
 
-/* ── TAXI BTN ────────────────────────────── */
+/* ── TAXI BTNS ───────────────────────────── */
 .soc-taxi{background:linear-gradient(135deg,#FFCC00,#FF9900);color:#111}
+.soc-bolt{background:linear-gradient(135deg,#34D186,#1AA870);color:#fff}
+
+/* ── LOYALTY SCREEN ──────────────────────── */
+.loyalty-hero{text-align:center;padding:28px 20px 16px}
+.loyalty-hero-emoji{font-size:72px;line-height:1;margin-bottom:12px;filter:drop-shadow(0 4px 16px rgba(232,168,56,.4))}
+.loyalty-hero-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;color:var(--gold);margin-bottom:6px}
+.loyalty-hero-sub{font-size:13px;color:var(--muted);line-height:1.5;max-width:280px;margin:0 auto}
+.kapibala-balance{display:flex;align-items:center;justify-content:center;gap:10px;padding:20px 0 8px}
+.kapibala-count{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--gold);line-height:1}
+.kapibala-icon{font-size:36px}
+.kapibala-soon{font-size:11px;color:var(--hint);text-align:center;padding-bottom:4px}
+.earn-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.earn-row:last-child{border-bottom:none}
+.earn-row-icon{font-size:18px;width:28px;text-align:center;flex-shrink:0}
+.earn-row-text{color:var(--text);font-weight:600}
+.earn-row-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.game-cta{margin:4px 12px 8px;background:linear-gradient(135deg,#1a0f2e,#2d1b4e);border:1px solid rgba(139,92,246,.4);border-radius:16px;padding:18px;cursor:pointer;width:calc(100% - 24px);text-align:left;transition:opacity .15s}
+.game-cta:active{opacity:.8}
+.game-cta-top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.game-cta-emoji{font-size:36px}
+.game-cta-title{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#c4b5fd;letter-spacing:1px}
+.game-cta-sub{font-size:12px;color:var(--muted);line-height:1.5}
+.game-cta-btn{display:inline-block;margin-top:10px;background:#7C3AED;color:white;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:800;font-family:'Inter',sans-serif}
 
 /* ── LIGHT THEME ─────────────────────────── */
 [data-theme="light"]{
@@ -300,6 +323,10 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
   <button class="nav-item" onclick="showScreen('about')" id="nav-about">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
     <span data-i18n="nav_about">О нас</span>
+  </button>
+  <button class="nav-item" onclick="showScreen('loyalty')" id="nav-loyalty">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <span data-i18n="nav_loyalty">Бонусы</span>
   </button>
   <button class="nav-item" onclick="openShareSheet()" id="nav-share">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
@@ -456,7 +483,8 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
         </div>
         <div style="height:8px"></div>
         <div class="soc-row">
-          <a class="soc-btn soc-taxi" href="https://3.redirect.appmetrica.yandex.com/route?end-lat=41.64771532280147&end-lon=41.63237222882858&appmetrica_tracking_id=1178268795219780156" target="_blank" style="flex:1">🚕 <span data-i18n="taxi_label">Вызвать такси</span></a>
+          <a class="soc-btn soc-taxi" href="https://3.redirect.appmetrica.yandex.com/route?end-lat=41.64771532280147&end-lon=41.63237222882858&appmetrica_tracking_id=1178268795219780156" target="_blank" style="flex:1">🚕 Yandex</a>
+          <a class="soc-btn soc-bolt" href="https://m.bolt.eu/?destination_lat=41.64771532280147&destination_lng=41.63237222882858" target="_blank" style="flex:1">⚡ Bolt</a>
         </div>
       </div>
       <!-- HOURS -->
@@ -479,6 +507,90 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
         </a>
       </div>
     </div>
+    <div style="height:16px"></div>
+  </div>
+</div>
+
+<!-- ======= LOYALTY ======= -->
+<div class="screen" id="screen-loyalty">
+  <div class="header">
+    <div class="header-logo"><img src="/logo.png" class="logo-mark" alt="NEKO"> NEKO</div>
+    <div class="header-controls">
+      <button class="theme-btn" onclick="toggleTheme()">☀️</button>
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="setLang('ge')">GE</button>
+        <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-content">
+    <div class="loyalty-hero">
+      <div class="loyalty-hero-emoji">🦫</div>
+      <div class="loyalty-hero-title" data-i18n="loyalty_title">Капибалы</div>
+      <div class="loyalty-hero-sub" data-i18n="loyalty_sub">Копи капибалы за заказы и активность — получай скидки и бесплатные блюда</div>
+    </div>
+
+    <!-- Balance -->
+    <div class="about-card" style="text-align:center">
+      <div class="about-card-title" data-i18n="loyalty_balance">Ваши капибалы</div>
+      <div class="kapibala-balance">
+        <span class="kapibala-count">0</span>
+        <span class="kapibala-icon">🦫</span>
+      </div>
+      <div class="kapibala-soon" data-i18n="loyalty_soon">Система начисления запускается скоро — следите за обновлениями!</div>
+    </div>
+
+    <!-- How to earn -->
+    <div class="about-card">
+      <div class="about-card-title" data-i18n="loyalty_earn_title">Как накапливать</div>
+      <div class="earn-row">
+        <div class="earn-row-icon">🛒</div>
+        <div><div class="earn-row-text" data-i18n="earn_orders">За каждый заказ в баре</div><div class="earn-row-sub" data-i18n="earn_orders_sub">1 капибала = 1 ₾</div></div>
+      </div>
+      <div class="earn-row">
+        <div class="earn-row-icon">📲</div>
+        <div><div class="earn-row-text" data-i18n="earn_story">За сторис о нас</div><div class="earn-row-sub" data-i18n="earn_story_sub">+10 капибал за каждую сторис</div></div>
+      </div>
+      <div class="earn-row">
+        <div class="earn-row-icon">👥</div>
+        <div><div class="earn-row-text" data-i18n="earn_friends">Приведи друга</div><div class="earn-row-sub" data-i18n="earn_friends_sub">+20 капибал, если друг сделает заказ</div></div>
+      </div>
+      <div class="earn-row">
+        <div class="earn-row-icon">🎮</div>
+        <div><div class="earn-row-text" data-i18n="earn_game">В игре @crooked_cook_bot</div><div class="earn-row-sub" data-i18n="earn_game_sub">Зарабатывай капибалы играя</div></div>
+      </div>
+    </div>
+
+    <!-- How to spend -->
+    <div class="about-card">
+      <div class="about-card-title" data-i18n="loyalty_spend_title">На что тратить</div>
+      <div class="earn-row">
+        <div class="earn-row-icon">🍣</div>
+        <div><div class="earn-row-text" data-i18n="spend_roll">Бесплатный ролл</div><div class="earn-row-sub" data-i18n="spend_roll_sub">50 капибал</div></div>
+      </div>
+      <div class="earn-row">
+        <div class="earn-row-icon">🍹</div>
+        <div><div class="earn-row-text" data-i18n="spend_drink">Бесплатный напиток</div><div class="earn-row-sub" data-i18n="spend_drink_sub">30 капибал</div></div>
+      </div>
+      <div class="earn-row">
+        <div class="earn-row-icon">💰</div>
+        <div><div class="earn-row-text" data-i18n="spend_discount">Скидка 10% на заказ</div><div class="earn-row-sub" data-i18n="spend_discount_sub">100 капибал</div></div>
+      </div>
+    </div>
+
+    <!-- Game CTA -->
+    <button class="game-cta" onclick="openGame()">
+      <div class="game-cta-top">
+        <div class="game-cta-emoji">🎮</div>
+        <div>
+          <div class="game-cta-title" data-i18n="game_title">Crooked Cook</div>
+          <div class="game-cta-sub" data-i18n="game_sub">Мини-игра в Telegram — зарабатывай капибалы и побеждай друзей</div>
+        </div>
+      </div>
+      <div class="game-cta-btn" data-i18n="game_btn">🎮 Играть сейчас</div>
+    </button>
+
     <div style="height:16px"></div>
   </div>
 </div>
@@ -653,11 +765,22 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 // ── i18n ──────────────────────────────────────────────────────────────────
 const i18n = {
   ru: {
-    nav_menu:'Меню', nav_cart:'Корзина', nav_booking:'Бронь', nav_about:'О нас', nav_share:'Поделиться',
+    nav_menu:'Меню', nav_cart:'Корзина', nav_booking:'Бронь', nav_about:'О нас', nav_loyalty:'Бонусы', nav_share:'Поделиться',
     welcome_desc:'Авторский суши-бар в Батуми. Японская кухня, авторские коктейли и уютная атмосфера.',
     welcome_menu:'Смотреть меню', welcome_about:'О заведении', welcome_booking:'Забронировать стол',
     share_title:'Поделиться', share_copy:'Копировать ссылку', share_repost:'Переслать другу', share_story:'Сделать сторис', share_story_sub:'и получить бонус от заведения',
     bonus_title:'Бонус за сторис!', bonus_desc:'Покажи сторис официанту и получи приятный бонус от заведения', bonus_btn:'Отлично, спасибо!',
+    loyalty_title:'Капибалы', loyalty_sub:'Копи капибалы за заказы и активность — получай скидки и бесплатные блюда',
+    loyalty_balance:'Ваши капибалы', loyalty_soon:'Система начисления запускается скоро — следите за обновлениями!',
+    loyalty_earn_title:'Как накапливать', loyalty_spend_title:'На что тратить',
+    earn_orders:'За каждый заказ в баре', earn_orders_sub:'1 капибала = 1 ₾',
+    earn_story:'За сторис о нас', earn_story_sub:'+10 капибал за каждую сторис',
+    earn_friends:'Приведи друга', earn_friends_sub:'+20 капибал, если друг сделает заказ',
+    earn_game:'В игре @crooked_cook_bot', earn_game_sub:'Зарабатывай капибалы играя',
+    spend_roll:'Бесплатный ролл', spend_roll_sub:'50 капибал',
+    spend_drink:'Бесплатный напиток', spend_drink_sub:'30 капибал',
+    spend_discount:'Скидка 10% на заказ', spend_discount_sub:'100 капибал',
+    game_title:'Crooked Cook', game_sub:'Мини-игра в Telegram — зарабатывай капибалы и побеждай друзей', game_btn:'🎮 Играть сейчас',
     opt_delivery:'Доставка', opt_delivery_sub:'Доставим по вашему адресу',
     address_label:'Адрес доставки', geo_btn:'Определить геолокацию',
     taxi_label:'Вызвать такси',
@@ -686,11 +809,22 @@ const i18n = {
     added:'✅ Добавлено в корзину!', order_sent:'🎉 Заказ отправлен! Ждём вас в Neko.'
   },
   en: {
-    nav_menu:'Menu', nav_cart:'Cart', nav_booking:'Book', nav_about:'About', nav_share:'Share',
+    nav_menu:'Menu', nav_cart:'Cart', nav_booking:'Book', nav_about:'About', nav_loyalty:'Bonuses', nav_share:'Share',
     welcome_desc:'Artisan sushi bar in Batumi. Japanese cuisine, signature cocktails and cozy atmosphere.',
     welcome_menu:'View menu', welcome_about:'About us', welcome_booking:'Book a Table',
     share_title:'Share', share_copy:'Copy link', share_repost:'Forward to friend', share_story:'Make a Story', share_story_sub:'and get a bonus from the restaurant',
     bonus_title:'Story Bonus!', bonus_desc:'Show the story to our staff and get a special bonus', bonus_btn:'Awesome, thanks!',
+    loyalty_title:'Kapibalas', loyalty_sub:'Earn kapibalas for orders and activity — get discounts and free dishes',
+    loyalty_balance:'Your Kapibalas', loyalty_soon:'Earning system launching soon — stay tuned!',
+    loyalty_earn_title:'How to earn', loyalty_spend_title:'How to spend',
+    earn_orders:'For every order', earn_orders_sub:'1 kapibala = 1 ₾',
+    earn_story:'For a story about us', earn_story_sub:'+10 kapibalas per story',
+    earn_friends:'Bring a friend', earn_friends_sub:'+20 kapibalas when friend orders',
+    earn_game:'In the @crooked_cook_bot game', earn_game_sub:'Earn kapibalas by playing',
+    spend_roll:'Free roll', spend_roll_sub:'50 kapibalas',
+    spend_drink:'Free drink', spend_drink_sub:'30 kapibalas',
+    spend_discount:'10% discount', spend_discount_sub:'100 kapibalas',
+    game_title:'Crooked Cook', game_sub:'Telegram mini-game — earn kapibalas and beat your friends', game_btn:'🎮 Play now',
     opt_delivery:'Delivery', opt_delivery_sub:'We deliver to your address',
     address_label:'Delivery address', geo_btn:'Use my location',
     taxi_label:'Order a taxi',
@@ -719,11 +853,22 @@ const i18n = {
     added:'✅ Added to cart!', order_sent:'🎉 Order sent! See you at Neko.'
   },
   ge: {
-    nav_menu:'მენიუ', nav_cart:'კალათა', nav_booking:'ჯავშანი', nav_about:'ჩვენ შესახებ', nav_share:'გაზიარება',
+    nav_menu:'მენიუ', nav_cart:'კალათა', nav_booking:'ჯავშანი', nav_about:'ჩვენ შესახებ', nav_loyalty:'ბონუსი', nav_share:'გაზიარება',
     welcome_desc:'ავტორული სუში-ბარი ბათუმში. იაპონური სამზარეულო, ავტორული კოქტეილები და მყუდრო გარემო.',
     welcome_menu:'მენიუს ნახვა', welcome_about:'დაწესებულების შესახებ', welcome_booking:'მაგიდის დაჯავშნა',
     share_title:'გაზიარება', share_copy:'ბმულის კოპირება', share_repost:'მეგობრისთვის გადაგზავნა', share_story:'სტორის შექმნა', share_story_sub:'და მიიღე ბონუსი',
     bonus_title:'ბონუსი სტორისისთვის!', bonus_desc:'აჩვენე სტორი მიმტანს და მიიღე სიურპრიზი', bonus_btn:'სუპერ, გმადლობ!',
+    loyalty_title:'კაპიბალები', loyalty_sub:'დააგროვე კაპიბალები შეკვეთებისა და აქტივობისთვის — მიიღე ფასდაკლებები',
+    loyalty_balance:'შენი კაპიბალები', loyalty_soon:'სისტემა მალე გაეშვება — ყურადღება!',
+    loyalty_earn_title:'როგორ დააგროვო', loyalty_spend_title:'რაზე დახარჯო',
+    earn_orders:'ყოველი შეკვეთისთვის', earn_orders_sub:'1 კაპიბალა = 1 ₾',
+    earn_story:'სტორისთვის ჩვენს შესახებ', earn_story_sub:'+10 კაპიბალა სტორიზე',
+    earn_friends:'მოიყვანე მეგობარი', earn_friends_sub:'+20 კაპიბალა მეგობრის შეკვეთაზე',
+    earn_game:'@crooked_cook_bot-ის თამაშში', earn_game_sub:'გამოიმუშავე კაპიბალები',
+    spend_roll:'უფასო როლი', spend_roll_sub:'50 კაპიბალა',
+    spend_drink:'უფასო სასმელი', spend_drink_sub:'30 კაპიბალა',
+    spend_discount:'10% ფასდაკლება', spend_discount_sub:'100 კაპიბალა',
+    game_title:'Crooked Cook', game_sub:'Telegram-ის მინი-თამაში — გამოიმუშავე კაპიბალები', game_btn:'🎮 თამაში',
     opt_delivery:'მიტანა', opt_delivery_sub:'მიგიტანთ მისამართზე',
     address_label:'მიტანის მისამართი', geo_btn:'ადგილმდებარეობის გამოყენება',
     taxi_label:'ტაქსის გამოძახება',
@@ -1292,6 +1437,14 @@ function openShareSheet() {
 function closeShareSheet(e) {
   if (!e || e.target === document.getElementById('share-overlay')) {
     document.getElementById('share-overlay').classList.remove('open');
+  }
+}
+
+function openGame() {
+  if (tg?.openTelegramLink) {
+    tg.openTelegramLink('https://t.me/crooked_cook_bot');
+  } else {
+    window.open('https://t.me/crooked_cook_bot', '_blank');
   }
 }
 
