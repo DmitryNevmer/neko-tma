@@ -188,6 +188,47 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
 /* ── TOAST ───────────────────────────────── */
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--gold);color:var(--black);padding:10px 20px;border-radius:30px;font-size:13px;font-weight:800;z-index:999;opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── PHOTO IN MENU CARDS ─────────────────── */
+.menu-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.modal-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;border-radius:24px 24px 0 0}
+
+/* ── SHARE SHEET ─────────────────────────── */
+.share-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:700;align-items:flex-end}
+.share-overlay.open{display:flex}
+.share-sheet{background:var(--dark);border-radius:24px 24px 0 0;width:100%;max-width:430px;margin:0 auto;padding:24px 20px 32px;animation:slideUp .3s ease}
+.share-sheet-title{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:16px;color:var(--text)}
+.share-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border-radius:12px;cursor:pointer;border:1px solid var(--border);margin-bottom:8px;transition:opacity .15s}
+.share-item:active{opacity:.7}
+.share-item-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:var(--card2)}
+.share-item-label{font-size:14px;font-weight:700}
+
+/* ── BONUS MODAL ─────────────────────────── */
+.bonus-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:800;align-items:center;justify-content:center;padding:24px}
+.bonus-overlay.open{display:flex}
+.bonus-modal{background:var(--dark);border-radius:20px;padding:28px 24px;max-width:320px;width:100%;text-align:center;animation:slideUp .3s ease;border:1px solid var(--gold-border)}
+.bonus-emoji{font-size:56px;margin-bottom:12px}
+.bonus-title{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);margin-bottom:8px}
+.bonus-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px}
+.bonus-btn{width:100%;background:var(--gold);color:var(--black);border:none;border-radius:12px;padding:14px;font-family:'Inter',sans-serif;font-size:15px;font-weight:800;cursor:pointer}
+
+/* ── BOOKING SCREEN ──────────────────────── */
+.booking-hero{background:linear-gradient(135deg,#0D0D0D,#1a1000);padding:20px 16px 16px;border-bottom:1px solid var(--border);text-align:center}
+.booking-form{padding:16px;display:flex;flex-direction:column;gap:12px}
+.booking-field label{display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.booking-field input,.booking-field select,.booking-field textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--text);padding:12px 14px;font-family:'Inter',sans-serif;font-size:14px;transition:border-color .2s;-webkit-appearance:none}
+.booking-field input:focus,.booking-field select:focus,.booking-field textarea:focus{outline:none;border-color:var(--gold)}
+.booking-field select option{background:var(--dark);color:var(--text)}
+.booking-send-btn{width:100%;background:#229ED9;color:white;border:none;border-radius:14px;padding:16px;font-family:'Inter',sans-serif;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+.booking-send-btn:active{opacity:.85}
+
+/* ── DELIVERY GEO ────────────────────────── */
+.geo-btn{width:100%;background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:12px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;transition:border-color .2s}
+.geo-btn:active{opacity:.8}
+.address-block{display:none;margin-bottom:16px}
+
+/* ── TAXI BTN ────────────────────────────── */
+.soc-taxi{background:linear-gradient(135deg,#FFCC00,#FF9900);color:#111}
 </style>
 </head>
 <body>
@@ -205,11 +246,15 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
     </div>
     <span data-i18n="nav_cart">Корзина</span>
   </button>
+  <button class="nav-item" onclick="showScreen('booking')" id="nav-booking">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span data-i18n="nav_booking">Бронь</span>
+  </button>
   <button class="nav-item" onclick="showScreen('about')" id="nav-about">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
     <span data-i18n="nav_about">О нас</span>
   </button>
-  <button class="nav-item" onclick="shareApp()" id="nav-share">
+  <button class="nav-item" onclick="openShareSheet()" id="nav-share">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
     <span data-i18n="nav_share">Поделиться</span>
   </button>
@@ -223,7 +268,7 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
     <div class="welcome-sub" data-i18n="welcome_desc">Авторский суши-бар в Батуми. Японская кухня, авторские коктейли и уютная атмосфера.</div>
     <div class="welcome-actions">
       <button class="welcome-btn welcome-btn-primary" onclick="showScreen('menu')">🍣 <span data-i18n="welcome_menu">Смотреть меню</span></button>
-      <button class="welcome-btn welcome-btn-secondary" onclick="showScreen('about')">📍 <span data-i18n="welcome_about">О заведении</span></button>
+      <button class="welcome-btn welcome-btn-secondary" onclick="showScreen('booking')">📅 <span data-i18n="welcome_booking">Забронировать стол</span></button>
     </div>
   </div>
 </div>
@@ -353,6 +398,10 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
           <a class="soc-btn soc-phone" href="tel:+995599156401">📞 <span data-i18n="about_call">Позвонить</span></a>
           <a class="soc-btn soc-map" href="https://www.google.com/maps/search/Neko+Sushi+Bar+Batumi" target="_blank">🗺 <span data-i18n="about_map">На карте</span></a>
         </div>
+        <div style="height:8px"></div>
+        <div class="soc-row">
+          <a class="soc-btn soc-taxi" href="https://3.redirect.appmetrica.yandex.com/route?end-lat=41.6441&end-lon=41.6393&appmetrica_tracking_id=1178268795219780156" target="_blank" style="flex:1">🚕 <span data-i18n="taxi_label">Вызвать такси</span></a>
+        </div>
       </div>
       <!-- HOURS -->
       <div class="about-card">
@@ -421,6 +470,18 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
           <div class="order-option-sub" data-i18n="opt_takeaway_sub">Заберёте готовый заказ самостоятельно</div>
         </div>
       </div>
+      <div class="order-option" onclick="selectOrderType('delivery')" id="opt-delivery">
+        <div class="order-option-icon">🛵</div>
+        <div>
+          <div class="order-option-text" data-i18n="opt_delivery">Доставка</div>
+          <div class="order-option-sub" data-i18n="opt_delivery_sub">Доставим по вашему адресу</div>
+        </div>
+      </div>
+    </div>
+    <div class="address-block" id="address-block">
+      <label data-i18n="address_label">Адрес доставки</label>
+      <textarea id="address-input" rows="2" maxlength="300" placeholder="ул. Руставели 12, кв. 5..."></textarea>
+      <button class="geo-btn" onclick="getGeoLocation()">📍 <span data-i18n="geo_btn">Определить геолокацию</span></button>
     </div>
     <div class="comment-block">
       <label data-i18n="comment_label">Комментарий <span style="color:var(--muted);font-weight:400" data-i18n="comment_optional">(необязательно)</span></label>
@@ -433,15 +494,117 @@ html,body{background:var(--black);color:var(--text);font-family:'Inter',sans-ser
   </div>
 </div>
 
+<!-- ======= BOOKING SCREEN ======= -->
+<div class="screen" id="screen-booking">
+  <div class="header">
+    <div class="header-logo"><span class="cat">🐱</span> NEKO</div>
+    <div class="lang-switcher">
+      <button class="lang-btn" onclick="setLang('ge')">GE</button>
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="scroll-content">
+    <div class="booking-hero">
+      <div style="font-size:40px;margin-bottom:8px">📅</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--gold)" data-i18n="booking_title">Забронировать стол</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px" data-i18n="booking_sub">Укажите детали — мы подтвердим</div>
+    </div>
+    <div class="booking-form">
+      <div class="booking-field">
+        <label data-i18n="booking_name_label">Ваше имя</label>
+        <input type="text" id="b-name" maxlength="60" placeholder="Иван">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="booking-field">
+          <label data-i18n="booking_date_label">Дата</label>
+          <input type="date" id="b-date">
+        </div>
+        <div class="booking-field">
+          <label data-i18n="booking_time_label">Время</label>
+          <select id="b-time">
+            <option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option>
+            <option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option>
+            <option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option>
+            <option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option>
+            <option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option>
+            <option>22:00</option><option>22:30</option><option>23:00</option><option>23:30</option>
+            <option>00:00</option><option>00:30</option><option>01:00</option><option>01:30</option>
+          </select>
+        </div>
+      </div>
+      <div class="booking-field">
+        <label data-i18n="booking_guests_label">Количество гостей</label>
+        <select id="b-guests">
+          <option>1</option><option>2</option><option selected>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option>
+          <option>9</option><option>10</option><option>11</option><option>12</option>
+        </select>
+      </div>
+      <div class="booking-field">
+        <label data-i18n="booking_comment_label">Комментарий <span style="font-weight:400;text-transform:none" data-i18n="comment_optional">(необязательно)</span></label>
+        <textarea id="b-comment" rows="2" maxlength="300" placeholder="Стол у окна · День рождения · Без глютена..."></textarea>
+      </div>
+      <button class="booking-send-btn" onclick="sendBooking()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+        <span data-i18n="booking_send">Отправить заявку в Telegram</span>
+      </button>
+    </div>
+    <div style="height:16px"></div>
+  </div>
+</div>
+
+<!-- SHARE SHEET -->
+<div class="share-overlay" id="share-overlay" onclick="closeShareSheet(event)">
+  <div class="share-sheet">
+    <div class="share-sheet-title" data-i18n="share_title">Поделиться</div>
+    <div class="share-item" onclick="shareLink()">
+      <div class="share-item-icon">🔗</div>
+      <div class="share-item-label" data-i18n="share_copy">Копировать ссылку</div>
+    </div>
+    <div class="share-item" onclick="shareRepost()">
+      <div class="share-item-icon" style="background:#229ED9">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+      </div>
+      <div class="share-item-label" data-i18n="share_repost">Переслать другу</div>
+    </div>
+    <div class="share-item" onclick="shareStory()">
+      <div class="share-item-icon" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">✨</div>
+      <div>
+        <div class="share-item-label" data-i18n="share_story">Сделать сторис</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px" data-i18n="share_story_sub">и получить бонус от заведения</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BONUS MODAL -->
+<div class="bonus-overlay" id="bonus-overlay" onclick="closeBonusModal(event)">
+  <div class="bonus-modal">
+    <div class="bonus-emoji">🎁</div>
+    <div class="bonus-title" data-i18n="bonus_title">Бонус за сторис!</div>
+    <div class="bonus-desc" data-i18n="bonus_desc">Покажи сторис официанту и получи приятный бонус от заведения</div>
+    <button class="bonus-btn" onclick="closeBonusModal()" data-i18n="bonus_btn">Отлично, спасибо!</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 // ── i18n ──────────────────────────────────────────────────────────────────
 const i18n = {
   ru: {
-    nav_menu:'Меню', nav_cart:'Корзина', nav_about:'О нас', nav_share:'Поделиться',
+    nav_menu:'Меню', nav_cart:'Корзина', nav_booking:'Бронь', nav_about:'О нас', nav_share:'Поделиться',
     welcome_desc:'Авторский суши-бар в Батуми. Японская кухня, авторские коктейли и уютная атмосфера.',
-    welcome_menu:'Смотреть меню', welcome_about:'О заведении',
+    welcome_menu:'Смотреть меню', welcome_about:'О заведении', welcome_booking:'Забронировать стол',
+    share_title:'Поделиться', share_copy:'Копировать ссылку', share_repost:'Переслать другу', share_story:'Сделать сторис', share_story_sub:'и получить бонус от заведения',
+    bonus_title:'Бонус за сторис!', bonus_desc:'Покажи сторис официанту и получи приятный бонус от заведения', bonus_btn:'Отлично, спасибо!',
+    opt_delivery:'Доставка', opt_delivery_sub:'Доставим по вашему адресу',
+    address_label:'Адрес доставки', geo_btn:'Определить геолокацию',
+    taxi_label:'Вызвать такси',
+    booking_title:'Забронировать стол', booking_sub:'Укажите детали — мы подтвердим',
+    booking_name_label:'Ваше имя', booking_date_label:'Дата', booking_time_label:'Время', booking_guests_label:'Количество гостей', booking_comment_label:'Комментарий',
+    booking_send:'Отправить заявку в Telegram', booking_sent:'🎉 Заявка отправлена! Ждём вас.',
     promo1_title:'Спецпредложение 16:00–18:00', promo1_sub:'Ролл или поке + коктейль — 45₾ · Ролл или поке + лимонад — 35₾',
     promo2_title:'1+1 все шоты 00:00–02:00', promo2_sub:'Любые шоты из меню — второй в подарок. Только ночью!',
     promo3_title:'Авторские коктейли Неко', promo3_sub:'11 уникальных рецептов с японскими духами Tenjaku. Попробуй все!',
@@ -464,9 +627,17 @@ const i18n = {
     added:'✅ Добавлено в корзину!', order_sent:'🎉 Заказ отправлен! Ждём вас в Neko.'
   },
   en: {
-    nav_menu:'Menu', nav_cart:'Cart', nav_about:'About', nav_share:'Share',
+    nav_menu:'Menu', nav_cart:'Cart', nav_booking:'Book', nav_about:'About', nav_share:'Share',
     welcome_desc:'Artisan sushi bar in Batumi. Japanese cuisine, signature cocktails and cozy atmosphere.',
-    welcome_menu:'View menu', welcome_about:'About us',
+    welcome_menu:'View menu', welcome_about:'About us', welcome_booking:'Book a Table',
+    share_title:'Share', share_copy:'Copy link', share_repost:'Forward to friend', share_story:'Make a Story', share_story_sub:'and get a bonus from the restaurant',
+    bonus_title:'Story Bonus!', bonus_desc:'Show the story to our staff and get a special bonus', bonus_btn:'Awesome, thanks!',
+    opt_delivery:'Delivery', opt_delivery_sub:'We deliver to your address',
+    address_label:'Delivery address', geo_btn:'Use my location',
+    taxi_label:'Order a taxi',
+    booking_title:'Book a Table', booking_sub:'Fill in the details — we\'ll confirm',
+    booking_name_label:'Your name', booking_date_label:'Date', booking_time_label:'Time', booking_guests_label:'Guests', booking_comment_label:'Comment',
+    booking_send:'Send via Telegram', booking_sent:'🎉 Booking sent! See you at Neko.',
     promo1_title:'Happy Hour 4:00 PM – 6:00 PM', promo1_sub:'Roll or poke + cocktail — 45₾ · Roll or poke + lemonade — 35₾',
     promo2_title:'1+1 all shots 12:00 AM – 2:00 AM', promo2_sub:'Any shots from menu — second one free. Nights only!',
     promo3_title:'Neko Signature Cocktails', promo3_sub:'11 unique recipes with Japanese Tenjaku spirits. Try them all!',
@@ -489,9 +660,17 @@ const i18n = {
     added:'✅ Added to cart!', order_sent:'🎉 Order sent! See you at Neko.'
   },
   ge: {
-    nav_menu:'მენიუ', nav_cart:'კალათა', nav_about:'ჩვენ შესახებ', nav_share:'გაზიარება',
+    nav_menu:'მენიუ', nav_cart:'კალათა', nav_booking:'ჯავშანი', nav_about:'ჩვენ შესახებ', nav_share:'გაზიარება',
     welcome_desc:'ავტორული სუში-ბარი ბათუმში. იაპონური სამზარეულო, ავტორული კოქტეილები და მყუდრო გარემო.',
-    welcome_menu:'მენიუს ნახვა', welcome_about:'დაწესებულების შესახებ',
+    welcome_menu:'მენიუს ნახვა', welcome_about:'დაწესებულების შესახებ', welcome_booking:'მაგიდის დაჯავშნა',
+    share_title:'გაზიარება', share_copy:'ბმულის კოპირება', share_repost:'მეგობრისთვის გადაგზავნა', share_story:'სტორის შექმნა', share_story_sub:'და მიიღე ბონუსი',
+    bonus_title:'ბონუსი სტორისისთვის!', bonus_desc:'აჩვენე სტორი მიმტანს და მიიღე სიურპრიზი', bonus_btn:'სუპერ, გმადლობ!',
+    opt_delivery:'მიტანა', opt_delivery_sub:'მიგიტანთ მისამართზე',
+    address_label:'მიტანის მისამართი', geo_btn:'ადგილმდებარეობის გამოყენება',
+    taxi_label:'ტაქსის გამოძახება',
+    booking_title:'მაგიდის დაჯავშნა', booking_sub:'შეავსეთ დეტალები — დავადასტურებთ',
+    booking_name_label:'თქვენი სახელი', booking_date_label:'თარიღი', booking_time_label:'დრო', booking_guests_label:'სტუმრების რაოდენობა', booking_comment_label:'კომენტარი',
+    booking_send:'Telegram-ით გაგზავნა', booking_sent:'🎉 მოთხოვნა გაიგზავნა! გელოდებით.',
     promo1_title:'სპეც შეთავაზება 16:00–18:00', promo1_sub:'როლი ან პოქე + კოქტეილი — 45₾ · როლი ან პოქე + ლიმონათი — 35₾',
     promo2_title:'1+1 ყველა ნაყენი 00:00–02:00', promo2_sub:'ნებისმიერი ნაყენი — მეორე საჩუქრად. მხოლოდ ღამით!',
     promo3_title:'ნეკოს ავტორული კოქტეილები', promo3_sub:'11 უნიკალური რეცეპტი იაპონური Tenjaku სპირიტებით.',
@@ -515,6 +694,9 @@ const i18n = {
   }
 };
 
+// ── PHOTO HELPER ─────────────────────────────────────────────────────────
+const PH = u => `https://img.postershop.me/cdn-cgi/image/width=400,format=webp/https://img.postershop.me/67ed23d0e361a76a3c182c71/${u}-image.jpeg`;
+
 // ── DATA ──────────────────────────────────────────────────────────────────
 const CATS = [
   { id:'all',       key:'cat_all' },
@@ -534,14 +716,14 @@ const CATS = [
 
 const MENU = [
   // ── Закуски ─────────────────────────────────────────────────────────
-  {id:'s1', cat:'snacks', e:'🍤', ru:'Креветки темпура', en:'Shrimp Tempura', ge:'კრევეტები ტემპურა', price:21},
-  {id:'s2', cat:'snacks', e:'🍱', ru:'Сэндвич с лососем', en:'Salmon Sandwich', ge:'ორაგულის სენდვიჩი', price:21,
+  {id:'s1', cat:'snacks', e:'🍤', ru:'Креветки темпура', en:'Shrimp Tempura', ge:'კრევეტები ტემპურა', price:21, photo:'d92d070d-6928-46a2-b7e5-092f31180a57'},
+  {id:'s2', cat:'snacks', e:'🍱', ru:'Сэндвич с лососем', en:'Salmon Sandwich', ge:'ორაგულის სენდვიჩი', price:21, photo:'63d2f381-ae82-4c9b-a150-02bc869b6638',
     dru:'Лосось, авокадо, темпура, панко, нори, рис, сливочный сыр, соевый соус',
     den:'Salmon, avocado, tempura, panko, nori, rice, cream cheese, soy sauce'},
-  {id:'s3', cat:'snacks', e:'🍱', ru:'Сэндвич с угрём', en:'Eel Sandwich', ge:'გველთევზის სენდვიჩი', price:21,
+  {id:'s3', cat:'snacks', e:'🍱', ru:'Сэндвич с угрём', en:'Eel Sandwich', ge:'გველთევზის სენდვიჩი', price:21, photo:'a9c2cc72-1cd9-4bf8-9c5c-53a5f21460ee',
     dru:'Угорь, чука, темпура, панко, нори, рис, сливочный сыр, соевый соус',
     den:'Eel, chuka, tempura, panko, nori, rice, cream cheese, soy sauce'},
-  {id:'s4', cat:'snacks', e:'🍱', ru:'Сэндвич с тунцом', en:'Tuna Sandwich', ge:'ტუნას სენდვიჩი', price:21,
+  {id:'s4', cat:'snacks', e:'🍱', ru:'Сэндвич с тунцом', en:'Tuna Sandwich', ge:'ტუნას სენდვიჩი', price:21, photo:'59fcb51e-4ada-4011-8bf6-389d460e1c00',
     dru:'Тунец, морковь, темпура, панко, нори, рис, сливочный сыр, соевый соус',
     den:'Tuna, carrot, tempura, panko, nori, rice, cream cheese, soy sauce'},
   {id:'s5', cat:'snacks', e:'🌿', ru:'Чука', en:'Chuka', ge:'ჩუკა', price:15},
@@ -558,7 +740,7 @@ const MENU = [
   {id:'t3', cat:'tempura', e:'🔥', ru:'Горячий ролл с крабом, тунцом и кокосовым соусом', en:'Hot Roll with Crab, Tuna & Coconut Sauce', ge:'ცხელი კრაბის, ტუნასა და ქოქოსის სოუსის', price:30,
     dru:'Тунец, сурими, икра масаго, темпура, сливочный сыр, рис, нори, соус кокос-лемонграсс, том-ям',
     den:'Tuna, surimi, masago, tempura, cream cheese, rice, nori, coconut lemongrass sauce, tom yam paste'},
-  {id:'t4', cat:'tempura', e:'🔥', ru:'Темпура ролл с креветкой и соусом кимчи-том ям', en:'Tempura Roll with Shrimp & Kimchi Tom Yum Sauce', ge:'ტემპურა კრევეტებით და კიმჩი ტომიუმის სოუსით', price:30,
+  {id:'t4', cat:'tempura', e:'🔥', photo:'eda92b51-e4b1-4ff0-a4c5-48e895cc936a', ru:'Темпура ролл с креветкой и соусом кимчи-том ям', en:'Tempura Roll with Shrimp & Kimchi Tom Yum Sauce', ge:'ტემპურა კრევეტებით და კიმჩი ტომიუმის სოუსით', price:30,
     dru:'Тигровая креветка, шиитаке, маринованная морковь, сырная шапка, чёрный кунжут, темпура, соус кимчи-том ям',
     den:'Tiger shrimp, shiitake, pickled carrot, cheese cap, black sesame, tempura, kimchi-tom yum sauce'},
   // ── Роллы ────────────────────────────────────────────────────────────
@@ -574,7 +756,7 @@ const MENU = [
   {id:'r4', cat:'rolls', e:'🍣', ru:'Ролл с угрём и трюфельным соусом', en:'Roll with Eel & Truffle Sauce', ge:'გველთევზასა და ტრიუფელის სოუსით', price:29,
     dru:'Копчёный угорь, хрустящий огурец, чука, домашний унаги, миндаль, пармезан, трюфельный соус',
     den:'Smoked eel, crispy cucumber, chuka, homemade unagi, almond flakes, parmesan, truffle sauce'},
-  {id:'r5', cat:'rolls', e:'🍣', ru:'Ролл с лососем, шиитаке и соусом "Спайси манго"', en:'Roll with Salmon, Shiitake & Spicy Mango Sauce', ge:'ორაგულით, შიიტაკეთი და ცხარე მანგოს სოუსით', price:29,
+  {id:'r5', cat:'rolls', e:'🍣', photo:'f4d2c46f-c344-430b-a8c2-88df926ef5c3', ru:'Ролл с лососем, шиитаке и соусом "Спайси манго"', en:'Roll with Salmon, Shiitake & Spicy Mango Sauce', ge:'ორაგულით, შიიტაკეთი და ცხარე მანგოს სოუსით', price:29,
     dru:'Норвежский лосось, грибы шиитаке, кунжут, зелёный лук, рис, золотые нори, соус спайси манго',
     den:'Norwegian salmon, shiitake mushrooms, sesame, green onion, rice, golden nori, spicy mango sauce'},
   {id:'r6', cat:'rolls', e:'🍣', ru:'Ролл с тунцом, лососем и сливочным соусом', en:'Roll with Tuna, Salmon & Cream Sauce', ge:'ტუნასა, ორაგულისა და კრემის სოუსით', price:29,
@@ -583,16 +765,16 @@ const MENU = [
   {id:'r7', cat:'rolls', e:'🍣', ru:'Ролл с тунцом и соусом юдзу', en:'Roll with Tuna & Yuzu Sauce', ge:'ტუნასა და იუზუს სოუსით', price:29,
     dru:'Тунец, такуан, икра масаго, цедра лайма, сливочный сыр, рис, нори, соус юдзу',
     den:'Tuna, takuan, masago caviar, lime zest, cream cheese, rice, nori, yuzu sauce'},
-  {id:'r8', cat:'rolls', e:'🍣', ru:'Ролл с курицей и соусом BBQ', en:'Roll with Chicken & BBQ Sauce', ge:'ქათმის ხორცით და მწვადის სოუსით', price:29,
+  {id:'r8', cat:'rolls', e:'🍣', photo:'45fa95ef-22a6-456c-a27b-a0e06e3dfe88', ru:'Ролл с курицей и соусом BBQ', en:'Roll with Chicken & BBQ Sauce', ge:'ქათმის ხორცით და მწვადის სოუსით', price:29,
     dru:'Курочка терияки, такуан, кунжут, соус чили-майо, нори, рис, сливочный сыр, соус BBQ',
     den:'Teriyaki chicken, takuan, sesame, chili mayo, nori, rice, cream cheese, BBQ sauce'},
-  {id:'r9', cat:'rolls', e:'🍣', ru:'Ролл с лососем и соусом "Лесные ягоды"', en:'Roll with Salmon & Wild Berry Sauce', ge:'ორაგულითა და ველური კენკრის სოუსით', price:29,
+  {id:'r9', cat:'rolls', e:'🍣', photo:'9dbec110-3136-487f-ad21-3f7d2a61a81f', ru:'Ролл с лососем и соусом "Лесные ягоды"', en:'Roll with Salmon & Wild Berry Sauce', ge:'ორაგულითა და ველური კენკრის სოუსით', price:29,
     dru:'Тартар из лосося, креветка, бонита, манго, красная икра, чили-майо, соус лесные ягоды',
     den:'Salmon tartare, shrimp, bonita, mango, red caviar, chili mayo, wild berry sauce'},
-  {id:'r10', cat:'rolls', e:'🍣', ru:'Ролл с креветкой и соусом киви', en:'Roll with Shrimp & Kiwi Sauce', ge:'კრევეტებით და კივის სოუსით', price:29,
+  {id:'r10', cat:'rolls', e:'🍣', photo:'ee0e556d-93ca-445d-b09a-b82b2d6cb6d3', ru:'Ролл с креветкой и соусом киви', en:'Roll with Shrimp & Kiwi Sauce', ge:'კრევეტებით და კივის სოუსით', price:29,
     dru:'Тигровая креветка, киви, икра масаго, нори, рис, сливочный сыр, соус киви',
     den:'Tiger shrimp, kiwi, masago caviar, nori, rice, cream cheese, kiwi sauce'},
-  {id:'r11', cat:'rolls', e:'🍣', ru:'Ролл с лососем и миндальным соусом', en:'Roll with Salmon & Almond Sauce', ge:'ორაგულითა და ნუშის სოუსით', price:29,
+  {id:'r11', cat:'rolls', e:'🍣', photo:'b0ee7d9f-788c-4303-bd08-9b18eb09bd4a', ru:'Ролл с лососем и миндальным соусом', en:'Roll with Salmon & Almond Sauce', ge:'ორაგულითა და ნუშის სოუსით', price:29,
     dru:'Лосось, тунец, груша, бонита, зелёный лук, паста том ям, тобика, унаги, миндальный соус',
     den:'Salmon, tuna, pear, bonita, green onion, tom yum paste, tobika, unagi, almond sauce'},
   // ── Поке ─────────────────────────────────────────────────────────────
@@ -612,14 +794,14 @@ const MENU = [
   {id:'sp2', cat:'soups', e:'🍜', ru:'Кунжутный рамен', en:'Sesame Ramen', ge:'სეზამის რამენი', price:29,
     dru:'Лапша соба, куриная грудка, ткемали, нарутомаки, зелёный лук, нори, соевый соус, лайм, кунжутное масло',
     den:'Soba noodles, chicken breast, tkemali, narutomaki, green onions, nori, soy sauce, lime, sesame oil'},
-  {id:'sp3', cat:'soups', e:'🍜', ru:'Рамен даси с тунцом', en:'Dashi Ramen with Tuna', ge:'დაში რამენი ტუნათი', price:29,
+  {id:'sp3', cat:'soups', e:'🍜', photo:'ade88ca0-b6a0-4e21-9fd1-033be04990c5', ru:'Рамен даси с тунцом', en:'Dashi Ramen with Tuna', ge:'დაში რამენი ტუნათი', price:29,
     dru:'Яичная лапша, бульон даси, маринованный тунец, вакаме, маринованное яйцо, мисо, кунжут, бонита',
     den:'Egg noodles, dashi broth, marinated tuna, wakame, marinated egg, miso paste, sesame, bonita'},
-  {id:'sp4', cat:'soups', e:'🍜', ru:'Кунжутный рамен 2.0', en:'Sesame Ramen 2.0', ge:'სეზამის რამენი 2.0', price:29,
+  {id:'sp4', cat:'soups', e:'🍜', photo:'2be38b36-c898-426b-87c2-f587b99a03c1', ru:'Кунжутный рамен 2.0', en:'Sesame Ramen 2.0', ge:'სეზამის რამენი 2.0', price:29,
     dru:'Лапша соба, куриное филе, бульон Neko, шиитаке, маринованное яйцо, шрирача, белый кунжут, нори',
     den:'Soba noodles, chicken fillet, Neko broth, shiitake, pickled egg, sriracha, white sesame, nori'},
   // ── Прочее ───────────────────────────────────────────────────────────
-  {id:'e1', cat:'extras', e:'🥗', ru:'Салат с тунцом юдзу', en:'Yuzu Tuna Salad', ge:'სალათი ტუნა იუზუ', price:20,
+  {id:'e1', cat:'extras', e:'🥗', photo:'27047aed-baaa-4efe-be61-9f3234fba3ca', ru:'Салат с тунцом юдзу', en:'Yuzu Tuna Salad', ge:'სალათი ტუნა იუზუ', price:20,
     dru:'Тунец, перепелиные яйца, авокадо, айсберг, огурец, дрессинг (понзу, цитрус, кунжутное масло)',
     den:'Tuna, quail eggs, avocado, iceberg, cucumber, dressing (ponzu, citrus, sesame oil)'},
   {id:'e2', cat:'extras', e:'🍰', ru:'Десерт', en:'Dessert', ge:'დესერტი', price:14,
@@ -638,16 +820,16 @@ const MENU = [
   {id:'c6', cat:'cocktails', e:'🍹', ru:'Цусима', en:'Tsushima', ge:'ცუშიმა', price:24, dru:'Джин, апельсин, клюква, апероль', den:'Gin, orange, cranberry, Aperol'},
   {id:'c7', cat:'cocktails', e:'🍹', ru:'Когэцу', en:'Kogetsu', ge:'კოგეცუ', price:24, dru:'Джин, груша, мёд, имбирь', den:'Gin, pear, honey, ginger'},
   {id:'c8', cat:'cocktails', e:'🍹', ru:'Шизуку', en:'Shizuku', ge:'შიზუკუ', price:24, dru:'Ром, кокос, лаванда, лимон', den:'Rum, coconut, lavender, lemon'},
-  {id:'c9', cat:'cocktails', e:'🍹', ru:'Сэн', en:'Sen', ge:'სენ', price:24, dru:'Джин, лемонграсс, базилик, гуава, лимон', den:'Gin, lemongrass, basil, guava, lemon'},
-  {id:'c10', cat:'cocktails', e:'🍹', ru:'Юмэ', en:'Yume', ge:'იუმე', price:24, dru:'Ром, зелёный банан, фиалка, карамель, лайм', den:'Rum, green banana, violet, caramel, lime'},
-  {id:'c11', cat:'cocktails', e:'🥃', ru:'Нагасаки', en:'Nagasaki', ge:'ნაგასაკი', price:28, dru:'Виски, яблоко, корица, дым', den:'Whiskey, apple, cinnamon, smoke'},
+  {id:'c9', cat:'cocktails', e:'🍹', photo:'f433fbed-9a07-4215-bee4-4e2859daed15', ru:'Сэн', en:'Sen', ge:'სენ', price:24, dru:'Джин, лемонграсс, базилик, гуава, лимон', den:'Gin, lemongrass, basil, guava, lemon'},
+  {id:'c10', cat:'cocktails', e:'🍹', photo:'bf9b3e80-6d47-4c1e-b30d-9ff9c3a2d4b3', ru:'Юмэ', en:'Yume', ge:'იუმე', price:24, dru:'Ром, зелёный банан, фиалка, карамель, лайм', den:'Rum, green banana, violet, caramel, lime'},
+  {id:'c11', cat:'cocktails', e:'🥃', photo:'7f9c712a-71c8-46f9-b11d-a0313bf6f0c5', ru:'Нагасаки', en:'Nagasaki', ge:'ნაგასაკი', price:28, dru:'Виски, яблоко, корица, дым', den:'Whiskey, apple, cinnamon, smoke'},
   // ── Классика ─────────────────────────────────────────────────────────
   {id:'cl1', cat:'classics', e:'🍸', ru:'Японский Негрони', en:'Japanese Negroni', ge:'იაპონელი ნეგრონი', price:26, dru:'Японский джин Tenjaku, кампари, домашний вермут', den:'Tenjaku gin, campari, homemade vermouth'},
   {id:'cl2', cat:'classics', e:'🍸', ru:'Японский Олд Фешнд', en:'Japanese Old Fashioned', ge:'იაპონელი ძველმოდური', price:26, dru:'Японский виски Tenjaku, тростниковый сахар, биттер Ангостура', den:'Tenjaku whiskey, cane sugar, Angostura bitters'},
   {id:'cl3', cat:'classics', e:'🍸', ru:'Японский Джин-тоник', en:'Japanese Gin & Tonic', ge:'იაპონელი ჯინი და ტონიკი', price:26, dru:'Японский джин Tenjaku, тоник, юдзу', den:'Tenjaku gin, tonic, yuzu'},
   {id:'cl4', cat:'classics', e:'🍸', ru:'Японский глинтвейн', en:'Japanese Mulled Wine', ge:'იაპონური გლინტვეინი', price:26, dru:'Саке, имбирь, мёд, специи, маршмелоу', den:'Sake, ginger, honey, spices, marshmallow'},
   {id:'cl5', cat:'classics', e:'🍸', ru:'Porn Star', en:'Porn Star', ge:'პორნ სტარი', price:26, dru:'Водка, маракуйя, личи, лимон', den:'Vodka, passion fruit, lychee, lemon'},
-  {id:'cl6', cat:'classics', e:'🍸', ru:'Tom Yam Bloody Mary', en:'Tom Yam Bloody Mary', ge:'ტომ იამ ბლადი მარი', price:26, dru:'Водка, томатный сок, паста Том Ям, лемонграсс, ворчестер', den:'Vodka, tomato juice, tom yum paste, lemongrass, worcestershire'},
+  {id:'cl6', cat:'classics', e:'🍸', photo:'468d8f03-5aa9-4fd5-96f1-60a7f3ab9846', ru:'Tom Yam Bloody Mary', en:'Tom Yam Bloody Mary', ge:'ტომ იამ ბლადი მარი', price:26, dru:'Водка, томатный сок, паста Том Ям, лемонграсс, ворчестер', den:'Vodka, tomato juice, tom yum paste, lemongrass, worcestershire'},
   {id:'cl7', cat:'classics', e:'🍸', ru:'Классический коктейль', en:'Classic Cocktail', ge:'კლასიკური კოქტეილი', price:26},
   {id:'cl8', cat:'classics', e:'✨', ru:'The Greatest Cocktail', en:'The Greatest Cocktail', ge:'The Greatest Cocktail', price:28},
   // ── Шоты ─────────────────────────────────────────────────────────────
@@ -755,8 +937,10 @@ function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('screen-' + name)?.classList.add('active');
-  document.getElementById('nav-' + (name==='menu'?'menu':name==='cart'?'cart':name==='about'?'about':'share'))?.classList.add('active');
+  const navId = {menu:'nav-menu', cart:'nav-cart', about:'nav-about', booking:'nav-booking'}[name];
+  if (navId) document.getElementById(navId)?.classList.add('active');
   if (name === 'cart') renderCart();
+  if (name === 'booking') initBookingDate();
 }
 
 // ── CATEGORIES ────────────────────────────────────────────────────────────
@@ -782,8 +966,11 @@ function renderMenu() {
   el.innerHTML = items.map(item => {
     const name = item[lang] || item.ru;
     const p = item.price % 1 === 0 ? item.price + '₾' : item.price.toFixed(2) + '₾';
+    const imgContent = item.photo
+      ? `<img src="${PH(item.photo)}" alt="${name}" loading="lazy"><span style="position:relative;z-index:2;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));display:none">${item.e}</span>`
+      : `<span>${item.e}</span>`;
     return `<div class="menu-card cat-${item.cat}" onclick="openProductModal('${item.id}')">
-      <div class="menu-card-img"><span>${item.e}</span></div>
+      <div class="menu-card-img">${imgContent}</div>
       <div class="menu-card-body">
         <div class="menu-card-name">${name}</div>
         <div class="menu-card-bottom">
@@ -818,7 +1005,20 @@ function openProductModal(id) {
   currentQty = 1;
   const hero = document.getElementById('modal-hero');
   hero.style.background = CAT_GRADIENTS[item.cat] || 'var(--dark)';
-  document.getElementById('modal-emoji').textContent = item.e;
+  const emojiEl = document.getElementById('modal-emoji');
+  const existingImg = hero.querySelector('img.modal-photo');
+  if (existingImg) existingImg.remove();
+  if (item.photo) {
+    const img = document.createElement('img');
+    img.className = 'modal-photo';
+    img.src = PH(item.photo);
+    img.alt = item.ru;
+    hero.appendChild(img);
+    emojiEl.style.display = 'none';
+  } else {
+    emojiEl.style.display = '';
+    emojiEl.textContent = item.e;
+  }
   document.getElementById('modal-name').textContent = item[lang] || item.ru;
   const desc = lang === 'en' ? (item.den||item.dru||'') : lang === 'ge' ? (item.dge||item.den||item.dru||'') : (item.dru||'');
   document.getElementById('modal-ing').textContent = desc;
@@ -958,6 +1158,7 @@ function selectOrderType(type) {
   orderType = type;
   document.querySelectorAll('.order-option').forEach(o => o.classList.remove('selected'));
   document.getElementById('opt-' + type)?.classList.add('selected');
+  document.getElementById('address-block').style.display = type === 'delivery' ? 'block' : 'none';
   updateOrderUI();
 }
 
@@ -982,7 +1183,13 @@ function sendOrder() {
     return s + (item ? item.price * c.qty : 0);
   }, 0);
 
-  const typeLabel = orderType === 'visit' ? '🍽 Забронировать столик' : '🛍 Заказ с собой';
+  const address = orderType === 'delivery' ? document.getElementById('address-input').value.trim() : '';
+  if (orderType === 'delivery' && !address) {
+    document.getElementById('address-input').style.borderColor = '#f87171';
+    document.getElementById('address-input').focus();
+    return;
+  }
+  const typeLabel = orderType === 'visit' ? '🍽 Забронировать столик' : orderType === 'takeaway' ? '🛍 Заказ с собой' : `🛵 Доставка: ${address}`;
   const msg = `🐱 NEKO Sushi Bar — новый заказ\n\n${typeLabel}\n\n${orderLines}\n\n💰 Итого: ${total % 1 === 0 ? total : total.toFixed(2)}₾${comment ? '\n\n💬 Комментарий: ' + comment : ''}`;
 
   const url = `https://t.me/+995599156401?text=${encodeURIComponent(msg)}`;
@@ -1013,15 +1220,97 @@ function startPromoAuto() {
   setInterval(() => goSlide((slideIndex + 1) % 4), 4000);
 }
 
-// ── SHARE ─────────────────────────────────────────────────────────────────
-function shareApp() {
-  if (tg?.shareUrl) {
-    tg.shareUrl('https://t.me/AppHub_Studio_Bot/neko', '🐱 Neko Sushi Bar — японская кухня и авторские коктейли в Батуми');
-  } else if (navigator.share) {
-    navigator.share({ title: 'NEKO Sushi Bar', text: '🐱 Японская кухня и авторские коктейли в Батуми', url: 'https://neko-tma.vercel.app' });
-  } else {
-    showToast('🔗 neko-tma.vercel.app');
+// ── SHARE SHEET ───────────────────────────────────────────────────────────
+const SHARE_URL = 'https://t.me/AppHub_Studio_Bot/neko';
+const SHARE_TEXT = '🐱 Neko Sushi Bar — японская кухня и авторские коктейли в Батуми';
+
+function openShareSheet() {
+  document.getElementById('share-overlay').classList.add('open');
+}
+
+function closeShareSheet(e) {
+  if (!e || e.target === document.getElementById('share-overlay')) {
+    document.getElementById('share-overlay').classList.remove('open');
   }
+}
+
+function shareLink() {
+  closeShareSheet();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(SHARE_URL).then(() => showToast('🔗 Ссылка скопирована!'));
+  } else {
+    showToast('🔗 ' + SHARE_URL);
+  }
+}
+
+function shareRepost() {
+  closeShareSheet();
+  if (tg?.shareUrl) {
+    tg.shareUrl(SHARE_URL, SHARE_TEXT);
+  } else if (navigator.share) {
+    navigator.share({ title: 'NEKO Sushi Bar', text: SHARE_TEXT, url: SHARE_URL });
+  } else {
+    showToast('🔗 Ссылка скопирована!');
+  }
+}
+
+function shareStory() {
+  closeShareSheet();
+  const storyImg = 'https://neko-tma.vercel.app/og.jpg';
+  if (tg?.shareToStory) {
+    tg.shareToStory(storyImg, { text: SHARE_TEXT, widget_link: { url: SHARE_URL, name: 'NEKO' } });
+    setTimeout(() => document.getElementById('bonus-overlay').classList.add('open'), 800);
+  } else {
+    document.getElementById('bonus-overlay').classList.add('open');
+  }
+}
+
+function closeBonusModal(e) {
+  if (!e || e.target === document.getElementById('bonus-overlay') || e.target.closest('.bonus-btn')) {
+    document.getElementById('bonus-overlay').classList.remove('open');
+  }
+}
+
+// ── BOOKING ───────────────────────────────────────────────────────────────
+function initBookingDate() {
+  const d = document.getElementById('b-date');
+  if (!d.value) {
+    const today = new Date();
+    d.min = today.toISOString().split('T')[0];
+    d.value = today.toISOString().split('T')[0];
+  }
+}
+
+function sendBooking() {
+  const name = document.getElementById('b-name').value.trim();
+  const date = document.getElementById('b-date').value;
+  const time = document.getElementById('b-time').value;
+  const guests = document.getElementById('b-guests').value;
+  const comment = document.getElementById('b-comment').value.trim();
+  if (!name) { document.getElementById('b-name').focus(); return; }
+  if (!date) { document.getElementById('b-date').focus(); return; }
+  const dateStr = date ? new Date(date).toLocaleDateString('ru-RU', {day:'numeric',month:'long'}) : '';
+  const msg = `📅 NEKO — заявка на бронирование\n\n👤 Имя: ${name}\n📆 Дата: ${dateStr}\n🕐 Время: ${time}\n👥 Гостей: ${guests}${comment ? '\n\n💬 ' + comment : ''}`;
+  if (tg?.openTelegramLink) {
+    tg.openTelegramLink('https://t.me/+995599156401');
+  } else {
+    window.open(`https://t.me/+995599156401?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+  showToast(t('booking_sent'));
+}
+
+// ── GEO ───────────────────────────────────────────────────────────────────
+function getGeoLocation() {
+  if (!navigator.geolocation) { showToast('❌ Геолокация недоступна'); return; }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const {latitude: lat, longitude: lng} = pos.coords;
+      const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
+      document.getElementById('address-input').value = mapsLink;
+      showToast('📍 Координаты добавлены');
+    },
+    () => showToast('❌ Не удалось определить геолокацию')
+  );
 }
 
 // ── TOAST ─────────────────────────────────────────────────────────────────
