@@ -1432,7 +1432,7 @@ function sendOrder() {
   const url = `https://t.me/+995599156401?text=${encodeURIComponent(msg)}`;
 
   if (tg?.openTelegramLink) {
-    tg.openTelegramLink('https://t.me/+995599156401');
+    tg.openTelegramLink(url);
   } else {
     window.open(url, '_blank');
   }
@@ -1581,10 +1581,11 @@ function sendBooking() {
   if (!date) { document.getElementById('b-date').focus(); return; }
   const dateStr = date ? new Date(date).toLocaleDateString('ru-RU', {day:'numeric',month:'long'}) : '';
   const msg = `📅 NEKO — заявка на бронирование\n\n👤 Имя: ${name}\n📆 Дата: ${dateStr}\n🕐 Время: ${time}\n👥 Гостей: ${guests}${comment ? '\n\n💬 ' + comment : ''}`;
+  const bookingUrl = `https://t.me/+995599156401?text=${encodeURIComponent(msg)}`;
   if (tg?.openTelegramLink) {
-    tg.openTelegramLink('https://t.me/+995599156401');
+    tg.openTelegramLink(bookingUrl);
   } else {
-    window.open(`https://t.me/+995599156401?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(bookingUrl, '_blank');
   }
   showToast(t('booking_sent'));
 }

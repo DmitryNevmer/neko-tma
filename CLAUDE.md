@@ -9,7 +9,7 @@
 |---|---|
 | Прод | https://neko-tma.vercel.app |
 | Репо | DmitryNevmer/neko-tma |
-| Стек | React 19 + TypeScript + Vite |
+| Стек | Vanilla HTML/CSS/JS SPA (один файл index.html, без сборщика) |
 | Vercel | korob-ka scope (dmitrynevmer) |
 | Бот | @AppHub_Studio_Bot, shortname `neko` → `t.me/AppHub_Studio_Bot/neko` |
 | Клиент | Neko Sushi Bar, Батуми |
@@ -24,13 +24,22 @@
 
 ## Архитектура
 
-Всё — один SPA без роутинга. Три файла:
-- `src/App.tsx` — весь UI (Header, OfferBanner, CategoryTabs, ItemCard, ItemModal, ContactSheet)
-- `src/data/menu.ts` — все позиции меню (`CATEGORIES` + `MENU`)
-- `src/index.css` — CSS-переменные и стили
+Всё — один файл `index.html` (~1650 строк). Никакого сборщика, никаких npm-зависимостей кроме Telegram WebApp JS.
 
-Добавление позиций меню: только `src/data/menu.ts`.
-Изменение цветов: CSS-переменные в начале `src/index.css`.
+Структура файла:
+- Lines 1–9: `<head>` + подключение Telegram WebApp JS + Google Fonts
+- Lines 10–304: `<style>` — CSS переменные и все стили
+- Lines 305–783: HTML — экраны, навигация, модалы
+- Lines 784–930: JS i18n (константы `i18n.ru/en/ge`)
+- Lines 931–1125: JS данные меню (`CATS` + `MENU`)
+- Lines 1126–1628: JS логика (инит, навигация, корзина, share, модалы)
+
+Экраны: welcome → menu → cart → booking → about (+ orphan: loyalty — в DOM, но нет nav-кнопки)
+Внешние ссылки: заказ/бронь → `t.me/+995599156401?text=...` через `tg.openTelegramLink(url)`
+
+Добавление позиций меню: только массив `MENU` в JS.
+Изменение цветов: CSS-переменные в начале `<style>`.
+Фото блюд: `PH(uuid)` — Cloudflare Image Resizing, bucket `67ed23d0e361a76a3c182c71`.
 
 ## Субагенты
 
