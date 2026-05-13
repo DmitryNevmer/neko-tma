@@ -1146,6 +1146,7 @@ if (tg) { tg.ready(); tg.expand(); }
   renderCart();
   updateBadge();
   startPromoAuto();
+  callAuth(); // fire-and-forget: auth + referral tracking
 })();
 
 // ── i18n ──────────────────────────────────────────────────────────────────
@@ -1438,6 +1439,17 @@ function sendOrder() {
   }
 
   showToast(t('order_sent'));
+  // Persist to DB (fire-and-forget, does not block UI)
+  saveOrderToBackend({
+    order_type: orderType,
+    items: cart.map(c => {
+      const m = MENU.find(i => i.id === c.id);
+      return { id: c.id, name: m?.ru || c.id, qty: c.qty, price: m?.price || 0 };
+    }),
+    total_price: total,
+    delivery_address: address || null,
+    comment: comment || null
+  });
   cart = [];
   saveCart();
   updateBadge();
@@ -1457,8 +1469,81 @@ function startPromoAuto() {
   setInterval(() => goSlide((slideIndex + 1) % 4), 4000);
 }
 
+// ── BACKEND ───────────────────────────────────────────────────────────────
+const API_BASE = 'https://apphub-api.vercel.app';
+const APP_SOURCE = 'neko';
+let authToken = null;
+
+// 4-level start_param fallback for referral tracking
+function parseRefCode() {
+  // L1: Telegram WebApp safe parse
+  const sp1 = tg?.initDataUnsafe?.start_param;
+  if (sp1?.startsWith('ref_')) return sp1.slice(4);
+  // L2: raw initData query string
+  try {
+    const sp2 = new URLSearchParams(tg?.initData || '').get('start_param');
+    if (sp2?.startsWith('ref_')) return sp2.slice(4);
+  } catch {}
+  // L3: URL search params
+  const sp3 = new URLSearchParams(location.search).get('startapp')
+    || new URLSearchParams(location.search).get('start');
+  if (sp3?.startsWith('ref_')) return sp3.slice(4);
+  // L4: hash params (Telegram web client)
+  try {
+    const sp4 = new URLSearchParams(location.hash.slice(1)).get('tgWebAppStartParam');
+    if (sp4?.startsWith('ref_')) return sp4.slice(4);
+  } catch {}
+  return null;
+}
+
+async function callAuth() {
+  if (!tg?.initData) return; // not in Telegram — skip silently
+  try {
+    const body = { initData: tg.initData, app_source: APP_SOURCE };
+    const ref = parseRefCode();
+    if (ref) body.ref_code = ref;
+    const res = await fetch(`${API_BASE}/api/auth/telegram`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) return;
+    const { token } = await res.json();
+    if (!token) return;
+    authToken = token;
+    // Fetch personal referral link and update share URL
+    const ri = await fetch(`${API_BASE}/api/neko/?action=referral-info`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (ri.ok) {
+      const { ref_link } = await ri.json();
+      if (ref_link) SHARE_URL = ref_link;
+    }
+  } catch {} // silent fail — app works without backend
+}
+
+// Fire-and-forget: save order to DB (doesn't block UI)
+function saveOrderToBackend(payload) {
+  if (!authToken) return;
+  fetch(`${API_BASE}/api/neko/?action=save-order`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${authToken}` },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+}
+
+// Fire-and-forget: save booking to DB (doesn't block UI)
+function saveBookingToBackend(payload) {
+  if (!authToken) return;
+  fetch(`${API_BASE}/api/neko/?action=save-booking`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${authToken}` },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+}
+
 // ── SHARE SHEET ───────────────────────────────────────────────────────────
-const SHARE_URL = 'https://t.me/AppHub_Studio_Bot/neko';
+let SHARE_URL = 'https://t.me/AppHub_Studio_Bot/neko'; // updated after auth with personal ref link
 const SHARE_TEXT = '🐱 Neko Sushi Bar — японская кухня и авторские коктейли в Батуми\n\n#суши #sushi #батуми #batumi #суши_бар #sushibar #роллы #японскаякухня #грузия #georgia #батуми2025';
 
 function openShareSheet() {
@@ -1587,6 +1672,14 @@ function sendBooking() {
   } else {
     window.open(bookingUrl, '_blank');
   }
+  // Persist to DB (fire-and-forget, does not block UI)
+  saveBookingToBackend({
+    guest_name: name,
+    booking_date: date,
+    booking_time: time || null,
+    guests_count: guests ? parseInt(guests, 10) : null,
+    comment: comment || null
+  });
   showToast(t('booking_sent'));
 }
 
