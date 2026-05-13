@@ -1,7 +1,9 @@
-# Neko Sushi Bar TMA — коммерческий проект
+# Neko Sushi Bar TMA — коммерческий проект (категория 3.3 — активный клиент)
 > Проектные правила. Общие правила → корневой `CLAUDE.md` в `C:\Users\user\Claude Code\`.
 > Security audit правило №0 — см. корневой CLAUDE.md.
-> Актуально: май 2026.
+> Актуально: 13.05.2026.
+>
+> **При начале сессии:** прочитать корневой `Claude Code/CLAUDE.md` + `_docs/history-claude-code.md` + самое свежее `_docs/knowledge-base/SYNC-NOTICE-YYYY-MM-DD.md`.
 
 ## Проект
 
